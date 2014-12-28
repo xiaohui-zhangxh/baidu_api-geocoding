@@ -8,8 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = BaiduApi::Geocoding::VERSION
   spec.authors       = ["xiaohui"]
   spec.email         = ["xiaohui@zhangxh.net"]
-  spec.summary       = %q{A ruby version [Baidu API Geocoder](http://developer.baidu.com/map/index.php?title=webapi/guide/webservice-geocoding) client.
-}
+  spec.summary       = %q{A ruby version of Baidu API Geocoder client.}
   spec.homepage      = "http://github.com/xiaohui-zhangxh/baidu_api-geocoding"
   spec.license       = "MIT"
 

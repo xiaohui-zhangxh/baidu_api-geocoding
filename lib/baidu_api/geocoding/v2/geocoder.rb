@@ -13,14 +13,10 @@ module BaiduApi
         API_HOST = 'http://api.map.baidu.com'
         GEOCODER_PATH = '/geocoder/v2/'
 
-        def geocode(address, options)
-          queries = [
-            [:address, address],
-            [:output, 'json'],
-            [:ak, options[:ak]]
-          ]
+        def geocode(data)
+          queries = fetch_query_params(data) + [[:output, 'json']]
           url = "#{API_HOST}#{GEOCODER_PATH}?#{to_query(queries)}"
-          url << "&sn=#{calculate_ak_sn(queries, options[:sk])}" if options[:sk]
+          url << "&sn=#{calculate_ak_sn(queries, data[:sk])}" if data[:sk]
           debug('url', url)
           open(url) do |http|
             ret = JSON.parse(http.read)
@@ -37,10 +33,16 @@ module BaiduApi
 
         def to_query(arr)
           query_str = arr.map do |k, v|
-            "#{CGI.escape(k.to_s)}=#{CGI.escape(v)}"
-          end.join('&')
+            v && "#{CGI.escape(k.to_s)}=#{CGI.escape(v)}"
+          end.compact.join('&')
           debug('query_str', query_str)
           query_str
+        end
+
+        def fetch_query_params(data)
+          %w(output ak address city coordtype location pois).map do |k|
+            [k.intern, data[k.intern]]
+          end.compact
         end
 
         def debug(subject, msg)

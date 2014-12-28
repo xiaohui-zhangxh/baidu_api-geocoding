@@ -20,22 +20,22 @@ module BaiduApi
       @@config || fail(ArgumentError, 'Please setup API with BaiduApi::Geocoding.setup(options) before starting!')
     end
 
-    def geocode(address, options = {})
-      options = fetch_options(options)
-      version = options.delete(:version).upcase
+    def geocode(data = {})
+      data = fetch_accepted_data(data)
+      version = data.delete(:version).upcase
       geocoder = Object.const_get("BaiduApi::Geocoding::#{version}::Geocoder") rescue fail(ArgumentError, "API version #{version} doesn't exist!")
-      geocoder.geocode(address, options)
+      geocoder.geocode(data)
     end
 
-    def fetch_options(options)
-      %w(ak sk version).inject({}) do |ret, item|
-        ret[item.intern] = fetch_option(options, item)
+    def fetch_accepted_data(data)
+      %w(ak sk version address city coordtype location pois).inject({}) do |ret, item|
+        ret[item.intern] = fetch_data(data, item)
         ret
       end
     end
 
-    def fetch_option(options, key)
-      options.fetch(key.intern) { options.fetch(key.to_s, config[key]) }
+    def fetch_data(data, key)
+      data.fetch(key.intern) { data.fetch(key.to_s, config[key]) }
     end
 
   end
