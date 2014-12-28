@@ -24,19 +24,25 @@ Or install it yourself as:
 require 'baidu_api/geocoding'
 ```
 
-  BaiduApi::Geocoding.setup ak: 'xxxx', sk: 'xxxx'
+```ruby
+BaiduApi::Geocoding.setup ak: 'xxxx', sk: 'xxxx'
+```
 
 or
 
-  BaiduApi::Geocoding.setup do |config|
-    config.ak = 'xxxx'
-    config.sk = 'xxxx'
-  end
+```ruby
+BaiduApi::Geocoding.setup do |config|
+  config.ak = 'xxxx'
+  config.sk = 'xxxx'
+end
+```
 
 then
 
-  BaiduApi::Geocoding.geocode('百度大厦')
-  => {"status"=>0, "result"=>{"location"=>{"lng"=>116.30814954222, "lat"=>40.056885091681}, "precise"=>1, "confidence"=>80, "level"=>"商务大厦"}
+```ruby
+BaiduApi::Geocoding.geocode('百度大厦')
+=> {"status"=>0, "result"=>{"location"=>{"lng"=>116.30814954222, "lat"=>40.056885091681}, "precise"=>1, "confidence"=>80, "level"=>"商务大厦"}
+```
 
 ## Contributing
 
