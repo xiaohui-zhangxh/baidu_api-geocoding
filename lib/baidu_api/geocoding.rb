@@ -1,6 +1,7 @@
 
 require 'baidu_api/geocoding/version'
 require 'baidu_api/geocoding/configuration'
+require 'baidu_api/geocoding/exceptions/failed'
 require 'baidu_api/geocoding/v2/geocoder'
 
 module BaiduApi
@@ -25,6 +26,12 @@ module BaiduApi
       version = data.delete(:version).upcase
       geocoder = Object.const_get("BaiduApi::Geocoding::#{version}::Geocoder") rescue fail(ArgumentError, "API version #{version} doesn't exist!")
       geocoder.geocode(data)
+    end
+
+    def geocode!(data = {})
+      ret = geocode(data)
+      raise BaiduApi::Geocoding::Exceptions::Failed, ret if ret['status'] != 0
+      ret
     end
 
     def fetch_accepted_data(data)
