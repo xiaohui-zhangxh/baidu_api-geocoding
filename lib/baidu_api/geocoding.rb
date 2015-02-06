@@ -30,7 +30,7 @@ module BaiduApi
 
     def geocode!(data = {})
       ret = geocode(data)
-      raise BaiduApi::Geocoding::Exceptions::Failed, ret if ret['status'] != 0
+      raise BaiduApi::Geocoding::Exceptions::Failed.new(ret) if ret['status'] != 0
       ret
     end
 

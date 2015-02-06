@@ -3,7 +3,7 @@ module BaiduApi::Geocoding::Exceptions
     attr_reader :raw
     def initialize(raw)
       @raw = raw
-      super(raw['msg'])
+      super(raw['message'])
     end
   end
 end
