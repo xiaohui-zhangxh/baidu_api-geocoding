@@ -1,7 +1,8 @@
 module BaiduApi
   module Geocoding
     class Configuration
-      attr_accessor :ak, :sk, :version, :debug
+      attr_accessor :version, :debug
+      attr_reader :ak, :sk
 
       def initialize(options)
         @ak       = options.fetch(:ak){ options.fetch('ak') { fail ArgumentError, 'Missing argument :ak for configuration!' } }
@@ -14,6 +15,13 @@ module BaiduApi
         respond_to?(key) ? send(key) : nil
       end
 
+      def ak
+        @ak.is_a?(Proc) ? @ak.call : @ak
+      end
+
+      def sk
+        @sk.is_a?(Proc) ? @sk.call : @sk
+      end
     end
   end
 end
