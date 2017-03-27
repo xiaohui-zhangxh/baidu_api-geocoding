@@ -28,15 +28,6 @@ require 'baidu_api/geocoding'
 BaiduApi::Geocoding.setup ak: 'xxxx', sk: 'xxxx'
 ```
 
-or
-
-```ruby
-BaiduApi::Geocoding.setup do |config|
-  config.ak = 'xxxx'
-  config.sk = 'xxxx'
-end
-```
-
 To geocode an address:
 
 ```ruby
